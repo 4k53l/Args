@@ -1,11 +1,17 @@
 #include <Aks3l/Args.hpp>
 
+using namespace Aks3l;
+
 int main(int argc, char** argv)
 {
-  Aks3l::Args args{};
-  args.Parse(argc, argv);
+  Args::Flag   VerboseFlag{"verbose", "v"};
+  Args::StrArg arg{"name", "alias", "description"};
+  Args::IntArg arg2{"name2"};
 
-  (void)args;
+
+  Args::Parser parser{std::tuple<>(VerboseFlag, arg, arg2)};
+  parser.Parse(argc, argv);
+
 
   return 0;
 }

@@ -1,8 +1,5 @@
 #pragma once
 
-
-namespace Aks3l
-{
-#include "Args/Args.hpp"
-}
-
+#include "Args/Arg.hpp"
+#include "Args/Flag.hpp"
+#include "Args/Parser.hpp"
