@@ -1,20 +1,40 @@
 #pragma once
 
-#include <string>
+#include "Arg.hpp"
 
 namespace Aks3l{namespace Args{
 
-struct Flag
+
+class Flag : public Arg
 {
-    Flag(std::string name, std::string alias="", std::string desc=""):
-      Name{name}, Alias{alias}, Desc{desc} {}
+  public:
+    using Arg::Arg;
+    Flag(std::string name, bool set, std::string alias="", std::string desc=""):
+      Arg{name, alias, desc}
+    {
+      this->m_set = set;
+    }
 
-    std::string Name;
-    std::string Alias;
-    std::string Desc;
+  protected:
+    virtual bool interpret(const char* str)
+    {
+      while(*(str++) != 0)
+      {
+        if(str == '=')
+        {
+          switch(++str)
+          {
+            case 't'
+              return false;
+             default:
+              return true;
+          }
+        }
 
-    bool Set{false};
+      }
+
+    }
+
 };
-
 
 }}

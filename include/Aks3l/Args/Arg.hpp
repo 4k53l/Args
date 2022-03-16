@@ -1,38 +1,39 @@
 #pragma once
 
-#include "Flag.hpp"
-
 #include <string>
-#include <cstdlib>
 
 namespace Aks3l{namespace Args{
 
-template <typename T>
-class ArgT : public Flag
+struct Arg
 {
   public:
-    using Flag::Flag;
+    std::string Name;
+    std::string Alias;
+    std::string Desc;
 
   public:
-    T Value;
-
-  protected:
-    friend class Parser;
-    virtual void parse(const char*) = 0;
+    Arg(std::string name, std::string alias="", std::string desc=""):
+      Name{name}, Alias{alias}, Desc{desc}, m_set{false}
+    {}
 };
 
-class StrArg : public ArgT<std::string>
+struct Flag : public Arg
+{
+  bool Set;
+}
+
+
+struct StrArg : public Arg
 {
   public:
-    using ArgT<std::string>::ArgT;
+    std::string Value;
 
-  protected:
-    virtual void parse(const char* value) override
-    {
-      this->Value = value;
-    }
+  public:
+    using Arg::Arg;
 };
 
+
+/*
 struct IntArg : public ArgT<int>
 {
   public:
@@ -44,5 +45,6 @@ struct IntArg : public ArgT<int>
     this->Value = atoi(value);
   }
 };
+*/
 
 }}

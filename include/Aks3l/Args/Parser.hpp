@@ -5,6 +5,7 @@ namespace Aks3l{namespace Args{
 class Parser
 {
   public:
+    /*
     template<class... Args>
     Parser(std::tuple<Args&...> args)
     {
@@ -12,6 +13,7 @@ class Parser
     }
 
     virtual ~Parser() = default;
+    */
 
     void Parse(int argc, char** argv)
     {
@@ -21,7 +23,7 @@ class Parser
     }
 
   private:
-    std::vector<Flag&> Args;
+    //std::vector<Flag&> Args;
 
 };
 
