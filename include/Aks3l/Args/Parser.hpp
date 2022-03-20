@@ -1,29 +1,54 @@
 #pragma once
 
+#include "Flags.hpp"
+
+#include <vector>
+
 namespace Aks3l{namespace Args{
 
 class Parser
 {
   public:
-    /*
-    template<class... Args>
-    Parser(std::tuple<Args&...> args)
+    Parser(std::initializer_list<Flag*> flags): m_flags{flags} {}
+    ~Parser() = default;
+
+    void ParseFlags(int argc, char** argv)
     {
+      for(int i = 0; i < argc; i++)
+      {
+        if(argv[i][0] != '-')
+          continue;
 
-    }
+        for(Flag* pFlag : m_flags)
+        {
+          if(pFlag->Name == argv[i] || pFlag->Alias == argv[i])
+          {
+            pFlag->Set = true;
 
-    virtual ~Parser() = default;
-    */
+            if(i+1 >= argc)
+              break;
 
-    void Parse(int argc, char** argv)
-    {
-      (void)argc;
-      (void)argv;
-      //...
+            if(dynamic_cast<StrFlag*>(pFlag) != nullptr)
+            {
+              dynamic_cast<StrFlag*>(pFlag)->Value = argv[i+1];
+              i++;
+            }
+
+            if(dynamic_cast<IntFlag*>(pFlag) != nullptr)
+            {
+              dynamic_cast<IntFlag*>(pFlag)->Value = std::atoi(argv[i+1]);
+              i++;
+            }
+          }
+
+        }
+
+      }
+
     }
 
   private:
-    //std::vector<Flag&> Args;
+    std::vector<Flag*> m_flags;
 
 };
 
